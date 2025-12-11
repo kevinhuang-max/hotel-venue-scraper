@@ -1,6 +1,6 @@
 import FirecrawlApp from '@mendable/firecrawl-js';
 
-const firecrawl = new FirecrawlApp({ apiKey: process.env.FIRECRAWL_API_KEY });
+// Firecrawl client initialized on request
 
 const venueSchema = {
     type: 'object',
@@ -78,7 +78,10 @@ export async function POST(request) {
               return Response.json({ error: 'Firecrawl API key not configured' }, { status: 500 });
       }
 
-      // Scrape the page with LLM extraction
+      // Initialize Firecrawl client   
+        const firecrawl = new FirecrawlApp({ apiKey: process.env.FIRECRAWL_API_KEY });
+
+            // Scrape the page with LLM extraction
       const result = await firecrawl.scrapeUrl(url, {
               formats: ['extract'],
               extract: {
